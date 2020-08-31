@@ -1,67 +1,151 @@
 import java.util.Scanner;
 
 public class Duke {
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DONE = "done";
+    private static final String COMMAND_BYE = "bye";
 
-    public static void echo(String word) {
-        System.out.println(
-                "____________________________________________________________\n"
-                + "added: " + word + " \n"
-                + "____________________________________________________________\n");
+    private static final int MAX_TASKS = 100;
+
+    private static final String GREET_SIGN = "____________________________________________________________\n"
+            + "Hello! I'm Duke\n"
+            + "What can I do for you?\n"
+            + "____________________________________________________________\n";
+    private static final String BYE_SIGN = "____________________________________________________________\n"
+            + "Bye. Hope to see you again soon!\n"
+            + "____________________________________________________________\n";
+
+    public static void printLine() {
+        System.out.println("____________________________________________________________\n");
     }
 
-    public static void printList(Task[] taskList, int size) {
-        System.out.println("____________________________________________________________\n");
-        for(int i = 0; i < size; i++) {
-            System.out.println((i+1) + ". " + taskList[i].getStatusIcon()
-                    + " " + taskList[i].description);
+    private static Task[] taskList = new Task[MAX_TASKS];
+    private static int taskListNum = 0;
+
+    public static void echo(String word) {
+        printLine();
+        System.out.println("added: " + word + " \n");
+        printLine();
+    }
+
+    public static void printList() {
+        printLine();
+        System.out.println("Here are the tasks in your list:");
+        for(int i = 0; i < taskListNum; i++) {
+            System.out.println((i+1) + ". " + taskList[i].toString());
         }
-        System.out.println("____________________________________________________________\n");
+        printLine();
+    }
+
+    public static void addTask(Task task) {
+        taskList[taskListNum] = task;
+        taskListNum++;
+    }
+
+    public static void addTodo(String task) {
+        Task t = new ToDo(task);
+        addTask(t);
+        echoTask(t);
+    }
+
+    public static void addDeadline(String task) {
+        String description = task.substring(0, task.indexOf("/by"));
+        String by = task.substring(task.indexOf("/by")+3);
+
+        Task t = new Deadline(description, by);
+        addTask(t);
+        echoTask(t);
+    }
+
+    public static void addEvent(String task) {
+        String description = task.substring(0, task.indexOf("/at"));
+        String at = task.substring(task.indexOf("/at")+3);
+
+        Task t = new Event(description, at);
+        addTask(t);
+        echoTask(t);
+    }
+
+    public static void echoTask(Task task) {
+        printLine();
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task.toString());
+        if(taskListNum > 1) {
+            System.out.println("Now you have " + taskListNum + " tasks in the list.");
+        }
+        else {
+            System.out.println("Now you have " + taskListNum + " task in the list.");
+        }
+        printLine();
     }
 
     public static void printDone(Task doneItem) {
-        System.out.println("____________________________________________________________\n"
-                + "Nice! I've marked this task as done: \n"
+        printLine();
+        System.out.println("Nice! I've marked this task as done: \n"
                 + doneItem.getStatusIcon()  + " "
                 + doneItem.description);
-        System.out.println("____________________________________________________________\n");
+        printLine();
     }
 
-    public static void main(String[] args) {
-        String logo = "____________________________________________________________\n"
-                + "Hello! I'm Duke\n"
-                + "What can I do for you?\n"
-                + "____________________________________________________________\n";
-        String byeSign = "____________________________________________________________\n"
-                + "Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n";
-
-        System.out.println(logo);
-
-        int index = 0;
+    public static String[] splitCommandAndTask(String args) {
+        final String[] line = args.trim().split(" ",2);
+        if(line.length == 2) {
+            return line;
+        }
+        else {
+            return new String[] {line[0], ""};
+        }
+    }
+    public static void handleTask() {
         String line;
-        Task[] taskList = new Task[100];
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
 
         while (!line.equals("bye")) {
             if(line.equals("list")){
-                printList(taskList, index);
+                //display list
+                printList();
             }
             else if(line.contains("done")) {
-                int number = Integer.parseInt(line.replaceAll("[^0-9]", ""));
-                taskList[number-1].markAsDone();
-                printDone(taskList[number-1]);
+                //mark task as done
+                String[] doneTask = splitCommandAndTask(line);
+                int index = Integer.parseInt(doneTask[1]) - 1;
+                taskList[index].markAsDone();
+                printDone(taskList[index]);
             } else {
                 //add item to list
-                taskList[index] = new Task(line);
-                echo(line);
-                index++;
+                taskList[taskListNum] = new Task(line);
+
+                if(line.contains("todo")) {
+                    //add task without date/time attached to it
+                    String[] todoTask = splitCommandAndTask(line);
+                    addTodo(todoTask[1]);
+                } else if(line.contains("deadline")) {
+                    //add task that needs to be done before a specific date/time
+                    String[] deadlineTask = splitCommandAndTask(line);
+                    addDeadline(deadlineTask[1]);
+                } else if(line.contains("event")) {
+                    //add task that needs to be done before a specific date/time
+                    String[] eventTask = splitCommandAndTask(line);
+                    addEvent(eventTask[1]);
+                }
+                else {
+                    //echo command entered by user
+                    echo(line);
+                }
             }
 
             in = new Scanner(System.in);
             line = in.nextLine();
         }
+    }
 
-        System.out.println(byeSign);
+    public static void main(String[] args) {
+        System.out.println(GREET_SIGN);
+        handleTask();
+        System.out.println(BYE_SIGN);
     }
 }
