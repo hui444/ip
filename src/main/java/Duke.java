@@ -19,7 +19,7 @@ public class Duke {
             + "____________________________________________________________\n";
 
     public static void printLine() {
-        System.out.println("____________________________________________________________\n");
+        System.out.println("____________________________________________________________");
     }
 
     private static Task[] taskList = new Task[MAX_TASKS];
@@ -99,17 +99,17 @@ public class Duke {
             return new String[] {line[0], ""};
         }
     }
-    public static void handleTask() {
+    public static void handleTasks() {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
 
-        while (!line.equals("bye")) {
-            if(line.equals("list")){
+        while (!line.equals(COMMAND_BYE)) {
+            if(line.equals(COMMAND_LIST)){
                 //display list
                 printList();
             }
-            else if(line.contains("done")) {
+            else if(line.contains(COMMAND_DONE)) {
                 //mark task as done
                 String[] doneTask = splitCommandAndTask(line);
                 int index = Integer.parseInt(doneTask[1]) - 1;
@@ -119,15 +119,15 @@ public class Duke {
                 //add item to list
                 taskList[taskListNum] = new Task(line);
 
-                if(line.contains("todo")) {
+                if(line.contains(COMMAND_TODO)) {
                     //add task without date/time attached to it
                     String[] todoTask = splitCommandAndTask(line);
                     addTodo(todoTask[1]);
-                } else if(line.contains("deadline")) {
+                } else if(line.contains(COMMAND_DEADLINE)) {
                     //add task that needs to be done before a specific date/time
                     String[] deadlineTask = splitCommandAndTask(line);
                     addDeadline(deadlineTask[1]);
-                } else if(line.contains("event")) {
+                } else if(line.contains(COMMAND_EVENT)) {
                     //add task that needs to be done before a specific date/time
                     String[] eventTask = splitCommandAndTask(line);
                     addEvent(eventTask[1]);
@@ -137,7 +137,6 @@ public class Duke {
                     echo(line);
                 }
             }
-
             in = new Scanner(System.in);
             line = in.nextLine();
         }
@@ -145,7 +144,7 @@ public class Duke {
 
     public static void main(String[] args) {
         System.out.println(GREET_SIGN);
-        handleTask();
+        handleTasks();
         System.out.println(BYE_SIGN);
     }
 }
