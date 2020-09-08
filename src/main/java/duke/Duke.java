@@ -89,9 +89,9 @@ public class Duke {
                 throw new DukeException("Please input a date for the deadline!");
             }
             String description = task.substring(0, task.indexOf("/by"));
-            String by = task.substring(task.indexOf("/by") + 3);
+            String deadlineDate = task.substring(task.indexOf("/by") + 3);
 
-            Task deadline = new Deadline(description, by);
+            Task deadline = new Deadline(description, deadlineDate);
             addTask(deadline);
             echoTask(deadline);
         } catch (StringIndexOutOfBoundsException e) {
@@ -112,9 +112,9 @@ public class Duke {
                 throw new DukeException("Please input a date for this event!");
             }
             String description = task.substring(0, task.indexOf("/at"));
-            String at = task.substring(task.indexOf("/at") + 3);
+            String eventDate = task.substring(task.indexOf("/at") + 3);
 
-            Task event = new Event(description, at);
+            Task event = new Event(description, eventDate);
             addTask(event);
             echoTask(event);
         } catch (StringIndexOutOfBoundsException e) {
@@ -201,11 +201,11 @@ public class Duke {
                     addTodo(task);
                     break;
                 case COMMAND_DEADLINE:
-                        addDeadline(task);
-                        break;
+                    addDeadline(task);
+                    break;
                 case COMMAND_EVENT:
-                        addEvent(task);
-                        break;
+                    addEvent(task);
+                    break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
