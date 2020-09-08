@@ -140,15 +140,15 @@ public class Duke {
             if (inputNum == null) {
                 throw new DukeException("☹ OOPS!!! Please input a number to mark task as done.");
             }
-            int index = Integer.parseInt(inputNum) - 1;
-            if (index < 0 || index >= taskListNum) {
+            int itemIndex = Integer.parseInt(inputNum) - 1;
+            if (itemIndex < 0 || itemIndex >= taskListNum) {
                 throw new DukeException("Invalid task number.");
             }
-            if(taskList[index].getStatusIcon().equals("[" + "\u2713" + "]")) {
+            if(taskList[itemIndex].getStatusIcon().equals("[" + "\u2713" + "]")) {
                 throw new DukeException("This task is already marked as done!");
             }
-            taskList[index].markAsDone();
-            printDone(taskList[index]);
+            taskList[itemIndex].markAsDone();
+            printDone(taskList[itemIndex]);
         } catch (NumberFormatException e) {
             printError("Invalid task number.");
         } catch (DukeException e) {
