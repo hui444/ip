@@ -6,6 +6,8 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.ToDo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -15,6 +17,7 @@ public class Duke {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DONE = "done";
     private static final String COMMAND_BYE = "bye";
+    private static final String COMMAND_DELETE = "delete";
 
     private static final int MAX_TASKS = 100;
 
@@ -27,12 +30,19 @@ public class Duke {
             + "____________________________________________________________\n";
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
 
+    private static final String ERROR_EMPTY_TODO = "☹ OOPS!!! The description of a todo cannot be empty.";
+    private static final String ERROR_EMPTY_DEADLINE = "☹ OOPS!!! The description of a deadline cannot be empty.";
+    private static final String ERROR_EMPTY_EVENT = "☹ OOPS!!! The description of an event cannot be empty.";
+    private static final String ERROR_EMPTY_LIST = "List is empty.";
+    private static final String ERROR_INVALID_INPUT = "Invalid input!";
+    private static final String ERROR_UNRECOGNISED_INPUT = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static final String ERROR_INVALID_TASK_NUMBER = "Invalid task number.";
+    private static final String ERROR_NO_DATE_DEADLINE = "Please input a date for the deadline!";
+    private static final String ERROR_NO_DATE_EVENT = "Please input a date for this event!";
+    private static final String ERROR_MARKED_TASK = "This task has already marked as done!";
+
     public static void printLine() {
         System.out.println(HORIZONTAL_LINE);
-    }
-
-    public static String printEmptyError(String errTask) {
-        return "☹ OOPS!!! The description of a " + errTask + " cannot be empty.";
     }
 
     public static void printError(String errorMessage) {
@@ -41,52 +51,46 @@ public class Duke {
         printLine();
     }
 
-    private static Task[] taskList = new Task[MAX_TASKS];
-    private static int taskListNum = 0;
+    private static ArrayList<Task> arrTasks= new ArrayList<>();
 
     public static void printList() {
-        if (taskListNum == 0) {
-            printError("List is empty.");
+        if (arrTasks.size() == 0) {
+            printError(ERROR_EMPTY_LIST);
             return;
         }
         printLine();
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskListNum; i++) {
-            System.out.println((i+1) + ". " + taskList[i].toString());
+        for (int i = 0; i < arrTasks.size(); i++) {
+            System.out.println((i+1) + ". " + arrTasks.get(i));
         }
         printLine();
     }
 
     public static void addTask(Task task) {
-        taskList[taskListNum] = task;
-        taskListNum++;
+        arrTasks.add(task);
     }
 
-    public static void addTodo(String task) {
+    public static void addTodo(String task) throws DukeException {
         try {
             if(task == null) {
-                throw new DukeException(printEmptyError(COMMAND_TODO));
+                throw new DukeException(ERROR_EMPTY_TODO);
             }
             Task todo = new ToDo(task);
             addTask(todo);
             echoTask(todo);
         } catch (StringIndexOutOfBoundsException e) {
-            printError("Input error!");
-        } catch (DukeException e) {
-            printLine();
-            System.out.println(e);
-            printLine();
+            printError(ERROR_INVALID_INPUT);
         }
 
     }
 
-    public static void addDeadline(String task) {
+    public static void addDeadline(String task) throws DukeException {
         try {
             if(task == null) {
-                throw new DukeException(printEmptyError(COMMAND_DEADLINE));
+                throw new DukeException(ERROR_EMPTY_DEADLINE);
             }
             if(!task.contains("/by")) {
-                throw new DukeException("Please input a date for the deadline!");
+                throw new DukeException(ERROR_NO_DATE_DEADLINE);
             }
             String description = task.substring(0, task.indexOf("/by"));
             String deadlineDate = task.substring(task.indexOf("/by") + 3);
@@ -95,21 +99,17 @@ public class Duke {
             addTask(deadline);
             echoTask(deadline);
         } catch (StringIndexOutOfBoundsException e) {
-            printError("Input error!");
-        } catch (DukeException e) {
-            printLine();
-            System.out.println(e);
-            printLine();
+            printError(ERROR_INVALID_INPUT);
         }
     }
 
-    public static void addEvent(String task) {
+    public static void addEvent(String task) throws DukeException {
         try {
             if (task == null) {
-                throw new DukeException(printEmptyError(COMMAND_EVENT));
+                throw new DukeException(ERROR_EMPTY_EVENT);
             }
             if(!task.contains("/at")) {
-                throw new DukeException("Please input a date for this event!");
+                throw new DukeException(ERROR_NO_DATE_EVENT);
             }
             String description = task.substring(0, task.indexOf("/at"));
             String eventDate = task.substring(task.indexOf("/at") + 3);
@@ -118,11 +118,7 @@ public class Duke {
             addTask(event);
             echoTask(event);
         } catch (StringIndexOutOfBoundsException e) {
-            printError("Input error!");
-        } catch (DukeException e) {
-            printLine();
-            System.out.println(e);
-            printLine();
+            printError(ERROR_INVALID_INPUT);
         }
     }
 
@@ -130,39 +126,29 @@ public class Duke {
         printLine();
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task.toString());
-        String wordTask = (taskListNum > 1) ? " tasks" : " task";
-        System.out.println("Now you have " + taskListNum + wordTask + " in the list.");
+        String wordTask = (arrTasks.size() > 1) ? " tasks" : " task";
+        System.out.println("Now you have " + arrTasks.size() + wordTask + " in the list.");
         printLine();
     }
 
-    public static void markAsDone(String inputNum) {
+    public static void markAsDone(String inputNum) throws DukeException {
         try {
-            if (inputNum == null) {
-                throw new DukeException("☹ OOPS!!! Please input a number to mark task as done.");
+            int itemIndex = getIndexFromInput(inputNum,
+                    "Please input a number to mark task as done.");
+            if(arrTasks.get(itemIndex).getStatusIcon().equals("[\u2713]")) {
+                throw new DukeException(ERROR_MARKED_TASK);
             }
-            int itemIndex = Integer.parseInt(inputNum) - 1;
-            if (itemIndex < 0 || itemIndex >= taskListNum) {
-                throw new DukeException("Invalid task number.");
-            }
-            if(taskList[itemIndex].getStatusIcon().equals("[" + "\u2713" + "]")) {
-                throw new DukeException("This task is already marked as done!");
-            }
-            taskList[itemIndex].markAsDone();
-            printDone(taskList[itemIndex]);
+            arrTasks.get(itemIndex).markAsDone();
+            printDone(itemIndex);
         } catch (NumberFormatException e) {
-            printError("Invalid task number.");
-        } catch (DukeException e) {
-            printLine();
-            System.out.println(e);
-            printLine();
+            printError(ERROR_INVALID_TASK_NUMBER);
         }
     }
 
-    public static void printDone(Task doneItem) {
+    public static void printDone(int doneItemIndex) {
         printLine();
-        System.out.println("Nice! I've marked this task as done: \n"
-                + doneItem.getStatusIcon()  + " "
-                + doneItem.description);
+        System.out.println("Nice! I've marked this task as done: \n\t"
+                + arrTasks.get(doneItemIndex));
         printLine();
     }
 
@@ -173,6 +159,33 @@ public class Duke {
         }
         else {
             return new String[] {line[0], null};
+        }
+    }
+
+    public static int getIndexFromInput(String inputNum, String nullErrMessage) throws DukeException {
+        if(inputNum == null) {
+            throw new DukeException(nullErrMessage);
+        }
+        int itemIndex = Integer.parseInt(inputNum) - 1;
+        if (itemIndex < 0 || itemIndex >= arrTasks.size()) {
+            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
+        }
+        return itemIndex;
+    }
+
+    public static void deleteTask(String inputNum) throws DukeException {
+        try {
+            int deletedItemIndex = getIndexFromInput(inputNum,
+                    "Please input a number to delete task.");
+            printLine();
+            System.out.println("Noted. I've removed this task:  \n\t"
+                    + arrTasks.get(deletedItemIndex));
+            arrTasks.remove(deletedItemIndex);
+            String wordTask = (arrTasks.size() > 1) ? " tasks" : " task";
+            System.out.println("Now you have " + arrTasks.size() + wordTask + " in the list.");
+            printLine();
+        } catch (DukeException err) {
+            throw err;
         }
     }
 
@@ -206,16 +219,19 @@ public class Duke {
                 case COMMAND_EVENT:
                     addEvent(task);
                     break;
+                case COMMAND_DELETE:
+                    deleteTask(task);
+                    break;
                 default:
-                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new DukeException(ERROR_UNRECOGNISED_INPUT);
                 }
             } catch (NumberFormatException e) {
-                printError("Invalid input!");
+                printError(ERROR_INVALID_INPUT);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Number is out of range!");
             } catch (DukeException e) {
                 printLine();
-                System.out.println(e);
+                System.out.println(e.errorMessage);
                 printLine();
             }
 
