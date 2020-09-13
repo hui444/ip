@@ -10,4 +10,10 @@ public class ToDo extends Task {
 	public String toString() {
 	    return "[T]" + super.toString();
 	}
+
+	@Override
+	public String fileString() {
+		int val = isDone ? 1 : 0;
+		return "T | " + val + " | " + this.description;
+	}
 }
