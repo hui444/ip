@@ -5,6 +5,6 @@ public class DukeException extends Exception {
 	public String errorMessage;
 
 	public DukeException(String errorMessage) {
-		this. errorMessage = errorMessage;
+		this.errorMessage = errorMessage;
 	}
 }
