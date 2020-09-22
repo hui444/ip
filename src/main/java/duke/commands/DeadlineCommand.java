@@ -1,11 +1,12 @@
 package duke.commands;
 
 import duke.TaskList;
-import duke.ui.TextUi;
 import duke.common.Errors;
+import duke.dateTimeManager.DateTimeManager;
 import duke.exceptions.DukeException;
 import duke.tasks.Deadline;
 import duke.tasks.Task;
+import duke.ui.TextUi;
 
 /**
  * Adds a deadline to task list.
@@ -21,6 +22,11 @@ public class DeadlineCommand {
 			}
 			String description = task.substring(0, task.indexOf("/by"));
 			String deadlineDate = task.substring(task.indexOf("/by") + 3);
+
+			if(isNew) {
+				//Creates newly formatted date
+				deadlineDate = DateTimeManager.dateTimeManager(deadlineDate);
+			}
 
 			Task deadline = new Deadline(description, deadlineDate);
 			TaskList.addTask(deadline);
