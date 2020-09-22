@@ -17,7 +17,6 @@ public class DeadlineCommand {
 			if(task == null) {
 				throw new DukeException(Errors.ERROR_EMPTY_DEADLINE);
 			}
-
 			if(!task.contains("/by")) {
 				throw new DukeException(Errors.ERROR_NO_DATE_DEADLINE);
 			}
@@ -38,7 +37,6 @@ public class DeadlineCommand {
 				//Creates newly formatted date
 				deadlineDate = DateTimeManager.dateTimeManager(deadlineDate);
 			}
-
 			Task deadline = new Deadline(description, deadlineDate);
 			TaskList.addTask(deadline);
 			if(isDone) {
