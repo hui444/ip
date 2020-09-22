@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Makes a new list containing keywords given by user
+ */
 public class FindCommand {
 	public static ArrayList<Task> filterByKeyword(String keyword) {
 		ArrayList<Task> filteredList = (ArrayList<Task>) TaskList.arrTasks.stream()

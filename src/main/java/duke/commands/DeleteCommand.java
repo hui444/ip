@@ -6,7 +6,7 @@ import duke.ui.TextUi;
 import duke.exceptions.DukeException;
 
 /**
- * Deletes task from task list.
+ * Deletes selected task from task list.
  */
 public class DeleteCommand {
 	public static void deleteTask(String inputNum) throws DukeException {
