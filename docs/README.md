@@ -27,7 +27,7 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
 Another way to use Duke is by running the JAR File directly.
 1. Copy the JAR File into an empty file
 1. Open a command window/Terminal in that folder
-1. Run the command `java -jar Duke.jar`
+1. Run the command java -jar {filename}.jar e.g., java -jar Duke.jar (i.e., run the command in the same folder as the jar file)
 1. If the setup is correct, you should see something like the below:
    ```
    ____________________________________________________________
