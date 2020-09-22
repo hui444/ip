@@ -48,5 +48,5 @@ public class DeadlineCommand {
 		} catch (StringIndexOutOfBoundsException e) {
 			TextUi.printError(Errors.ERROR_INVALID_INPUT);
 		}
-	}
+    }
 }
