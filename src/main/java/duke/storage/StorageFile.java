@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Initalises file for storage
+ * Initialises file for storage
  */
 public class StorageFile {
 	public StorageFile(String filePath, String directoryName) {
