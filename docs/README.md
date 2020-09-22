@@ -68,11 +68,13 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-` Got it. I've added this task:`
-`   [T][✘] read book`
-` Now you have 1 task in the list.`
-`____________________________________________________________`
+```
+____________________________________________________________
+Got it. I've added this task:
+   [T][✘] read book
+Now you have 1 task in the list.
+____________________________________________________________
+```
 
 ### `deadline <TASK DESCRIPTION> /by <DATE/TIME>` - Adds a deadline to the task list
 
@@ -86,17 +88,21 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-` Got it. I've added this task:`
-`   [D][✘] return book (by: Sunday)`
-` Now you have 2 tasks in the list.`
-` ____________________________________________________________`
+```
+____________________________________________________________
+Got it. I've added this task:
+   [D][✘] return book (by: Sunday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+```
 
-`____________________________________________________________`
-`Got it. I've added this task:`
-`  [D][✘] return book (by: Sep 26 2020, Sunday)`
-`Now you have 3 tasks in the list.`
-`____________________________________________________________`
+```
+____________________________________________________________
+Got it. I've added this task:
+  [D][✘] return book (by: Sep 26 2020, Sunday)
+Now you have 3 tasks in the list.
+____________________________________________________________
+```
 
 ### `event <TASK DESCRIPTION> /at <DATE/TIME>` - Adds an event to the task list
 
@@ -108,11 +114,13 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-` Got it. I've added this task:`
-`   [E][✘] project meeting (at: Mon 2-4pm)`
-` Now you have 4 tasks in the list.`
-`____________________________________________________________`
+```
+____________________________________________________________
+Got it. I've added this task:
+  [E][✘] project meeting (at: Mon 2-4pm)
+Now you have 4 tasks in the list.
+____________________________________________________________
+```
 
 ### `list` - Prints task list
 
@@ -124,13 +132,15 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-`Here are the tasks in your list:`
-`1. [T][✘] read book`
-`2. [D][✘] return book (by: Sunday)`
-`3. [D][✘] return book (by: Sep 26 2020, Sunday)`
-`4. [E][✘] project meeting (at: Mon 2-4pm)`
-`____________________________________________________________`
+```
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][✘] read book
+2. [D][✘] return book (by: Sunday)
+3. [D][✘] return book (by: Sep 26 2020, Sunday)
+4. [E][✘] project meeting (at: Mon 2-4pm)
+____________________________________________________________
+```
 
 ### `done <TASK INDEX>` - Marks a specified task as done
 
@@ -142,10 +152,12 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-`Nice! I've marked this task as done: `
-`	[T][✓] read book`
-`____________________________________________________________`
+```
+____________________________________________________________
+Nice! I've marked this task as done: 
+  [T][✓] read book
+____________________________________________________________
+```
 
 ### `delete <TASK INDEX>` - Deletes a specified task from task list
 
@@ -157,11 +169,13 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-`Noted. I've removed this task: `
-`	[D][✘] return book (by: Sunday)`
-`Now you have 3 tasks in the list.`
-`____________________________________________________________`
+```
+____________________________________________________________
+Noted. I've removed this task: 
+  [D][✘] return book (by: Sunday)
+Now you have 3 tasks in the list.
+____________________________________________________________
+```
 
 ### `find <KEYWORD>` - Finds tasks containing a specified keyword
 
@@ -173,11 +187,13 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-`Here are the matching "book" tasks in your list:`
-`1. [T][✓] read book`
-`2. [D][✘] return book (by: Sep 26 2020, Sunday)`
-`____________________________________________________________`
+```
+____________________________________________________________
+Here are the matching "book" tasks in your list:
+1. [T][✓] read book
+2. [D][✘] return book (by: Sep 26 2020, Sunday)
+____________________________________________________________
+```
 
 ### `bye` - Terminates Duke application
 
@@ -189,6 +205,8 @@ Example of usage:
 
 Expected outcome:
 
-`____________________________________________________________`
-`Bye. Hope to see you again soon!`
-`____________________________________________________________`
+```
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
