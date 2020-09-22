@@ -22,13 +22,17 @@ public class DeadlineCommand {
 				throw new DukeException(Errors.ERROR_NO_DATE_DEADLINE);
 			}
 
-			String description = task.substring(0, task.indexOf("/by"));
+			String description = task.substring(0, task.indexOf("/by")).trim();
 
 			if(description.isEmpty()) {
 				throw new DukeException(Errors.ERROR_EMPTY_DEADLINE);
 			}
 
-			String deadlineDate = task.substring(task.indexOf("/by") + 3);
+			String deadlineDate = task.substring(task.indexOf("/by") + 3).trim();
+
+			if(deadlineDate.isEmpty()) {
+				throw new DukeException(Errors.ERROR_NO_DATE_DEADLINE);
+			}
 
 			if(isNew) {
 				//Creates newly formatted date
