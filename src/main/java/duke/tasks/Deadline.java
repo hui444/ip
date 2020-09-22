@@ -11,12 +11,12 @@ public class Deadline extends Task{
 
 	@Override
 	public String toString() {
-	    return "[D]" + super.toString() + "(by:" + deadlineDate + ")";
+	    return "[D]" + super.toString() + " (by: " + deadlineDate + ")";
 	}
 
 	@Override
 	public String fileString() {
 		int val = isDone ? 1 : 0;
-		return "D | " + val + " | " + this.description + "|" + this.deadlineDate;
+		return "D | " + val + " | " + this.description + " | " + this.deadlineDate;
 	}
 }

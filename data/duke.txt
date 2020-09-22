@@ -1,5 +1,13 @@
 T | 1 | read book
 E | 0 | project meeting | Aug 6th 2-4pm
 T | 1 | try code
-T | 0 | level-8
+T | 1 | level-8
 D | 0 | read book | Dec 1 2019
+T | 0 | borrow book
+D | 0 | return book | Sunday
+E | 0 | project meeting | Mon 2-4pm
+D | 0 | do homework | no idea :)
+D | 0 | submit quiz | Oct 3 2020, i think so
+D | 0 | return book | Sep 26 2020, Sunday
+T | 1 | read book
+E | 0 | project meeting | Mon 2-4pm

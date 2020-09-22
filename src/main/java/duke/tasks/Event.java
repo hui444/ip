@@ -10,12 +10,12 @@ public class Event extends Task {
 
 	@Override
 	public String toString() {
-	    return "[E]" + super.toString() + "(at:" + eventDate + ")";
+	    return "[E]" + super.toString() + " (at: " + eventDate + ")";
 	}
 
 	@Override
 	public String fileString() {
 		int val = isDone ? 1 : 0;
-		return "E | " + val + " | " + this.description + "|" + this.eventDate;
+		return "E | " + val + " | " + this.description + " | " + this.eventDate;
 	}
 }
