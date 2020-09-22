@@ -17,10 +17,17 @@ public class DeadlineCommand {
 			if(task == null) {
 				throw new DukeException(Errors.ERROR_EMPTY_DEADLINE);
 			}
+
 			if(!task.contains("/by")) {
 				throw new DukeException(Errors.ERROR_NO_DATE_DEADLINE);
 			}
+
 			String description = task.substring(0, task.indexOf("/by"));
+
+			if(description.isEmpty()) {
+				throw new DukeException(Errors.ERROR_EMPTY_DEADLINE);
+			}
+
 			String deadlineDate = task.substring(task.indexOf("/by") + 3);
 
 			if(isNew) {

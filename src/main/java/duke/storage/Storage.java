@@ -70,7 +70,7 @@ public class Storage {
 				break;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			TextUi.printError("Error reading file!");
+			throw new DukeException(e.getMessage());
 		}
 	}
 }

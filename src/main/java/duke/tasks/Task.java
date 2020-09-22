@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import java.util.Collection;
+
 public class Task {
 	public String description;
 	protected Boolean isDone;
@@ -26,5 +28,9 @@ public class Task {
 	public String fileString() {
 		int val = isDone ? 1 : 0;
 		return "| " + val + " | " + this.description;
+	}
+
+	public String getDescription() {
+		return this.description;
 	}
 }
