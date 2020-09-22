@@ -47,26 +47,30 @@ public class Storage {
 	}
 
 	private static void extractData(String line) throws DukeException {
-		String[] args = line.split("\\|");
-		String taskType = args[0].trim();
-		boolean isDone = Integer.parseInt(args[1].trim()) == 1;
-		String description = args[2].trim();
+		try {
+			String[] args = line.split("\\|");
+			String taskType = args[0].trim();
+			boolean isDone = Integer.parseInt(args[1].trim()) == 1;
+			String description = args[2].trim();
 
-		switch (taskType) {
-		case "T":
-			TodoCommand.addTodo(description, isDone, false);
-			break;
-		case "D":
-			description = description + " /by " + args[3].trim();
-			DeadlineCommand.addDeadline(description, isDone, false);
-			break;
-		case "E":
-			description = description + " /at " + args[3].trim();
-			EventCommand.addEvent(description, isDone, false);
-			break;
-		default:
-			TextUi.printError("Cannot read task!");
-			break;
+			switch (taskType) {
+			case "T":
+				TodoCommand.addTodo(description, isDone, false);
+				break;
+			case "D":
+				description = description + " /by " + args[3].trim();
+				DeadlineCommand.addDeadline(description, isDone, false);
+				break;
+			case "E":
+				description = description + " /at " + args[3].trim();
+				EventCommand.addEvent(description, isDone, false);
+				break;
+			default:
+				TextUi.printError("Cannot read task!");
+				break;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new DukeException(e.getMessage());
 		}
 	}
 }

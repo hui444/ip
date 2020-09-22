@@ -14,4 +14,6 @@ public class Errors {
 	public static final String ERROR_INVALID_TASK_NUMBER = "Invalid task number.";
 	public static final String ERROR_NO_DATE_DEADLINE = "Please input a date for the deadline!";
 	public static final String ERROR_MARKED_TASK = "This task has already marked as done!";
+	public static final String ERROR_NO_KEYWORD = "Please input a keyword!";
+	public static final String ERROR_NOT_FOUND = "Sorry! No tasks found with the keyword: ";
 }

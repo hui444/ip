@@ -1,14 +1,8 @@
 package duke.parser;
 
+import duke.commands.*;
 import duke.storage.Storage;
 import duke.TaskList;
-
-import duke.commands.DeadlineCommand;
-import duke.commands.DoneCommand;
-import duke.commands.ListCommand;
-import duke.commands.TodoCommand;
-import duke.commands.EventCommand;
-import duke.commands.DeleteCommand;
 
 import duke.common.Commands;
 import duke.common.Errors;
@@ -50,6 +44,9 @@ public class Parser {
 				break;
 			case Commands.COMMAND_DELETE:
 				DeleteCommand.deleteTask(task);
+				break;
+			case Commands.COMMAND_FIND:
+				FindCommand.findTask(task);
 				break;
 			default:
 				throw new DukeException(Errors.ERROR_UNRECOGNISED_INPUT);
