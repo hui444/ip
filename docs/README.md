@@ -84,6 +84,7 @@ The date inputted has to be the first argument after `/by` and be in the form of
 Example of usage: 
 
 `deadline return book /by Sunday`
+
 `deadline return book /by 2020-09-26 Sunday`
 
 Expected outcome:
