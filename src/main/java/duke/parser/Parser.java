@@ -1,6 +1,12 @@
 package duke.parser;
 
-import duke.commands.*;
+import duke.commands.ListCommand;
+import duke.commands.DoneCommand;
+import duke.commands.TodoCommand;
+import duke.commands.DeadlineCommand;
+import duke.commands.EventCommand;
+import duke.commands.DeleteCommand;
+import duke.commands.FindCommand;
 import duke.storage.Storage;
 import duke.TaskList;
 
